@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_registration',
+    'chatbot',
 ]
 
 MIDDLEWARE = [
@@ -139,3 +141,6 @@ REST_REGISTRATION = {
     'RESET_PASSWORD_VERIFICATION_ENABLED': False,
     'REGISTER_EMAIL_VERIFICATION_ENABLED': False,
 }
+
+
+ASGI_APPLICATION = "chatibility.asgi.application"

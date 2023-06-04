@@ -1,0 +1,80 @@
+import pinecone
+
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.response import Response
+
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+
+from langchain.document_loaders import ReadTheDocsLoader, WebBaseLoader
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.vectorstores import Pinecone
+
+from .models import ChatBot
+from .serializer import ChatBotSerializer
+from .filters import IsOwner
+
+
+PINECONE_API_KEY = "3336e836-787e-49d4-8fd9-830ff614f160"
+PINECONE_ENV = "us-west4-gcp-free"
+
+class ChatBotViewSet(ModelViewSet):
+    queryset = ChatBot.objects.all()
+    serializer_class = ChatBotSerializer
+    authentication_classes = [TokenAuthentication]
+    filter_backends = [IsOwner]
+    permission_classes = [IsAuthenticated]
+
+
+    def create(self, request, *args, **kwargs):
+        # user = request.user
+
+        # name = request.data['name']
+        # website_url = request.data['website_url']
+
+        # chatbot = ChatBot.objects.create(user=user, name=name, website_url=website_url)
+
+        # print(chatbot)
+
+        result = super().create(request, *args, **kwargs)
+
+        website_url = request.data['website_url']
+        name = request.data['name']
+
+        print(website_url)
+
+        loader = WebBaseLoader(web_path=website_url) #TODO: change this
+        raw_documents = loader.load()
+        text_splitter = RecursiveCharacterTextSplitter(
+            chunk_size=1000,
+            chunk_overlap=200,
+        )
+
+        uuid = result.data['uuid']
+
+        documents = text_splitter.split_documents(raw_documents)
+        embeddings = OpenAIEmbeddings()
+
+        pinecone.init(
+            api_key=PINECONE_API_KEY,  # find at app.pinecone.io
+            environment=PINECONE_ENV  # next to api key in console
+        )
+
+        index_name = uuid
+
+        pinecone.create_index(
+            name=index_name,
+            dimension=1536,
+            metric='cosine',
+        )
+
+        _ = Pinecone.from_documents(documents, embeddings, index_name=index_name)
+
+        # serializer = ChatBotSerializer(chatbot)
+
+        # return Response(data=serializer.data)
+
+        return result
+
+

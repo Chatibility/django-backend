@@ -5,3 +5,17 @@ djangorestframework==3.14.0
 pytz==2023.3
 sqlparse==0.4.4
 typing_extensions==4.6.3
+openai
+fastapi
+black
+isort
+websockets
+pydantic
+langchain
+uvicorn
+jinja2
+faiss-cpu
+bs4
+unstructured
+libmagic
+tiktoken

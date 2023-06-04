@@ -16,8 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from rest_framework.routers import DefaultRouter
+
+from chatbot.views import ChatBotViewSet
+
+router = DefaultRouter()
+router.register('chatbots', ChatBotViewSet, basename='chatbots')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('rest_registration.api.urls')),
+    path('', include(router.urls)),
 ]
