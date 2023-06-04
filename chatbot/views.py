@@ -1,6 +1,7 @@
 import pinecone
 
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.views import APIView
 from rest_framework.response import Response
 
 from rest_framework.permissions import IsAuthenticated
@@ -14,6 +15,9 @@ from langchain.vectorstores import Pinecone
 from .models import ChatBot
 from .serializer import ChatBotSerializer
 from .filters import IsOwner
+
+from urllib.request import urlopen
+import xml.etree.ElementTree as et
 
 
 PINECONE_API_KEY = "3336e836-787e-49d4-8fd9-830ff614f160"
@@ -78,3 +82,13 @@ class ChatBotViewSet(ModelViewSet):
         return result
 
 
+class ExtractURLView(APIView):
+    def get(self, request, format=None):
+        with urlopen(request.data["xml_map"]) as url:
+            data = url.read()
+
+        xml = et.fromstring(data)
+        nsmp = {"doc": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+            
+        urls = [url.find('doc:loc', namespaces = nsmp).text for url in xml.findall('doc:url', namespaces = nsmp)] 
+        return Response(urls)
