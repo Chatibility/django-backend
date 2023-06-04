@@ -144,3 +144,9 @@ REST_REGISTRATION = {
 
 
 ASGI_APPLICATION = "chatibility.asgi.application"
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}

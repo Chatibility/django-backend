@@ -19,9 +19,11 @@ from chatbot.consumer import ChatConsumer
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'chatibility.settings')
 
 
+print("asgi setupppppp")
+
 application = ProtocolTypeRouter({
     "http": get_asgi_application(),
     "websocket": URLRouter({
-        path('chat/', ChatConsumer.as_asgi())
+        path('chat/<uuid:chat_id>', ChatConsumer.as_asgi())
     })
 })
