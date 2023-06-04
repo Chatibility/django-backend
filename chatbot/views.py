@@ -18,6 +18,7 @@ from .filters import IsOwner
 
 from urllib.request import urlopen
 import xml.etree.ElementTree as et
+import json
 
 
 PINECONE_API_KEY = "3336e836-787e-49d4-8fd9-830ff614f160"
@@ -32,23 +33,12 @@ class ChatBotViewSet(ModelViewSet):
 
 
     def create(self, request, *args, **kwargs):
-        # user = request.user
-
-        # name = request.data['name']
-        # website_url = request.data['website_url']
-
-        # chatbot = ChatBot.objects.create(user=user, name=name, website_url=website_url)
-
-        # print(chatbot)
 
         result = super().create(request, *args, **kwargs)
 
-        website_url = request.data['website_url']
-        name = request.data['name']
+        website_urls = json.loads(request.data['data'])['website_urls']
 
-        print(website_url)
-
-        loader = WebBaseLoader(web_path=website_url) #TODO: change this
+        loader = WebBaseLoader(web_path=website_urls)
         raw_documents = loader.load()
         text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=1000,
@@ -74,10 +64,6 @@ class ChatBotViewSet(ModelViewSet):
         )
 
         _ = Pinecone.from_documents(documents, embeddings, index_name=index_name)
-
-        # serializer = ChatBotSerializer(chatbot)
-
-        # return Response(data=serializer.data)
 
         return result
 

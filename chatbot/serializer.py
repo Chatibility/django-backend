@@ -8,4 +8,4 @@ class ChatBotSerializer(ModelSerializer):
 
     class Meta:
         model = ChatBot
-        fields = ['name', 'website_url', 'user', 'uuid']
+        fields = ['name', 'data', 'user', 'uuid']

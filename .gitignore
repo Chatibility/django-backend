@@ -275,4 +275,5 @@ pyrightconfig.json
 pyvenv.cfg
 pip-selfcheck.json
 
+launch.json
 # End of https://www.toptal.com/developers/gitignore/api/python,venv,django
