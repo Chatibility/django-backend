@@ -18,7 +18,7 @@ from django.urls import path, include
 
 from rest_framework.routers import DefaultRouter
 
-from chatbot.views import ChatBotViewSet, ExtractURLView
+from chatbots.views import ChatBotViewSet, ExtractURLView
 
 
 router = DefaultRouter()
