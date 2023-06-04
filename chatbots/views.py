@@ -37,9 +37,10 @@ class ChatBotViewSet(ModelViewSet):
 
     def create(self, request, *args, **kwargs):
 
+
         result = super().create(request, *args, **kwargs)
 
-        website_urls = json.loads(request.data['data'])['website_urls']
+        website_urls = request.data['data']['website_urls']
 
         loader = WebBaseLoader(web_path=website_urls)
         raw_documents = loader.load()
