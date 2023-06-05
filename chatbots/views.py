@@ -68,16 +68,16 @@ class ChatBotViewSet(ModelViewSet):
 
         index_name = uuid
 
-        # try:
-        pinecone.create_index(
-            name=index_name,
-            dimension=1536,
-            metric='cosine',
-        )
+        try:
+            pinecone.create_index(
+                name=index_name,
+                dimension=1536,
+                metric='cosine',
+            )
 
-        _ = Pinecone.from_documents(documents, embeddings, index_name=index_name)
-        # except Exception as e:
-        #     print("======================================", e )
+            _ = Pinecone.from_documents(documents, embeddings, index_name=index_name)
+        except Exception as e:
+            print("======================================", e )
 
         return result
 
