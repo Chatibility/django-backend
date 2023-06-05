@@ -155,7 +155,7 @@ CHANNEL_LAYERS = {
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
-CORS_ORIGIN_ALLOW_ALL = False 
+CORS_ORIGIN_ALLOW_ALL = True 
 CORS_ORIGIN_WHITELIST = (
     "https://chatibility.com",
     "http://localhost:3000",

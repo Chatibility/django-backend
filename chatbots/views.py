@@ -24,8 +24,11 @@ import xml.etree.ElementTree as et
 import json
 
 
-PINECONE_API_KEY = "1a89757e-91fa-420a-8fbc-6a39ff91da1d"
-PINECONE_ENV = "us-west4-gcp"
+# PINECONE_API_KEY = "1a89757e-91fa-420a-8fbc-6a39ff91da1d"
+# PINECONE_ENV = "us-west4-gcp"
+
+PINECONE_API_KEY = "3336e836-787e-49d4-8fd9-830ff614f160"
+PINECONE_ENV = "us-west4-gcp-free"
 
 class ChatBotViewSet(ModelViewSet):
     queryset = ChatBot.objects.all()

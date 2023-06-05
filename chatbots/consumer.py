@@ -10,8 +10,12 @@ from .callback import QuestionGenCallbackHandler, StreamingLLMCallbackHandler
 from .query_data import get_chain
 from .schemas import ChatResponse
 
-PINECONE_API_KEY = "1a89757e-91fa-420a-8fbc-6a39ff91da1d"
-PINECONE_ENV = "us-west4-gcp"
+# PINECONE_API_KEY = "1a89757e-91fa-420a-8fbc-6a39ff91da1d"
+# PINECONE_ENV = "us-west4-gcp"
+
+
+PINECONE_API_KEY = "3336e836-787e-49d4-8fd9-830ff614f160"
+PINECONE_ENV = "us-west4-gcp-free"
 
 
 def to_json(resp):
