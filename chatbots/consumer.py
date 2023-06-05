@@ -35,7 +35,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             environment=PINECONE_ENV  # next to api key in console
         )
 
-        docsearch = Pinecone.from_existing_index(chat_id, OpenAIEmbeddings())
+        docsearch = Pinecone.from_existing_index(chat_id, OpenAIEmbeddings(openai_api_key="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"))
 
         question_handler = QuestionGenCallbackHandler(self)
         stream_handler = StreamingLLMCallbackHandler(self)

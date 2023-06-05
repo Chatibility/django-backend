@@ -59,7 +59,7 @@ class ChatBotViewSet(ModelViewSet):
         uuid = result.data['uuid']
 
         documents = text_splitter.split_documents(raw_documents)
-        embeddings = OpenAIEmbeddings()
+        embeddings = OpenAIEmbeddings(openai_api_key="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")
 
         pinecone.init(
             api_key=PINECONE_API_KEY,  # find at app.pinecone.io
