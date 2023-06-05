@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    'corsheaders',
     'rest_registration',
     'chatbots',
 ]
@@ -151,3 +152,6 @@ CHANNEL_LAYERS = {
 }
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+
+CSRF_TRUSTED_ORIGINS = ["https://chatibility.com", "http://localhost:3000"]
