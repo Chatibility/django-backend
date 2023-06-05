@@ -10,9 +10,9 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 
-from langchain.document_loaders import ReadTheDocsLoader, WebBaseLoader
+from langchain.document_loaders import WebBaseLoader, NotionDirectoryLoader
 from langchain.embeddings import OpenAIEmbeddings
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain.text_splitter import RecursiveCharacterTextSplitter, SpacyTextSplitter
 from langchain.vectorstores import Pinecone
 
 from .models import ChatBot
@@ -36,7 +36,7 @@ class ChatBotViewSet(ModelViewSet):
 
 
     def create(self, request, *args, **kwargs):
-
+        print("inja")
 
         result = super().create(request, *args, **kwargs)
 
@@ -44,9 +44,16 @@ class ChatBotViewSet(ModelViewSet):
 
         loader = WebBaseLoader(web_path=website_urls)
         raw_documents = loader.load()
-        text_splitter = RecursiveCharacterTextSplitter(
+        raw_documents = []
+
+        notion_loader = NotionDirectoryLoader('challenge-data/')
+
+        print("notion", notion_loader.load())
+        
+        raw_documents.extend(notion_loader.load())
+
+        text_splitter = SpacyTextSplitter(
             chunk_size=1000,
-            chunk_overlap=200,
         )
 
         uuid = result.data['uuid']
@@ -76,7 +83,7 @@ class ChatBotViewSet(ModelViewSet):
 
 
 class ExtractURLView(APIView):
-    def get(self, request, format=None):
+    def post(self, request, format=None):
         with urlopen(request.data["xml_map"]) as url:
             data = url.read()
 
