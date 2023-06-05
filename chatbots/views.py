@@ -76,8 +76,8 @@ class ChatBotViewSet(ModelViewSet):
             )
 
             _ = Pinecone.from_documents(documents, embeddings, index_name=index_name)
-        except:
-            pass
+        except Exception as e:
+            print("======================================", e )
 
         return result
 
