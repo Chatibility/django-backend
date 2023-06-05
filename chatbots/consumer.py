@@ -10,7 +10,7 @@ from .callback import QuestionGenCallbackHandler, StreamingLLMCallbackHandler
 from .query_data import get_chain
 from .schemas import ChatResponse
 
-PINECONE_API_KEY = "3336e836-787e-49d4-8fd9-830ff614f160"
+PINECONE_API_KEY = "8b1bc6f0-bf61-487e-ba8c-0ecc54607ebc"
 PINECONE_ENV = "us-west4-gcp-free"
 
 
@@ -43,8 +43,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         qa_chain = get_chain(docsearch, question_handler, stream_handler)
 
 
-        if chat_id not in self.qa_chains:
-            self.qa_chains[chat_id] = qa_chain
+        self.qa_chains[self.channel_name] = qa_chain
         self.chat_histories[self.channel_name] = []
 
         return await super().websocket_connect(message)
@@ -67,7 +66,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         start_resp = ChatResponse(sender="bot", message="", type="start")
         await self.send(json.dumps(start_resp.dict()))
 
-        qa_chain = self.qa_chains[chat_id]
+        qa_chain = self.qa_chains[self.channel_name]
         chat_history = self.chat_histories[self.channel_name]
 
         result = await qa_chain.acall(

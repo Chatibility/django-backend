@@ -12,9 +12,14 @@ import os
 from channels.routing import ProtocolTypeRouter, URLRouter
 from django.core.asgi import get_asgi_application
 
+from channels.security.websocket import OriginValidator
+
+
 from django.urls import path
 
 from chatbots.consumer import ChatConsumer
+
+from channels.auth import AuthMiddlewareStack
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'chatibility.settings')
 
@@ -23,7 +28,7 @@ print("asgi setupppppp")
 
 application = ProtocolTypeRouter({
     "http": get_asgi_application(),
-    "websocket": URLRouter({
+    "websocket": OriginValidator(AuthMiddlewareStack(URLRouter({
         path('chat/<uuid:chat_id>', ChatConsumer.as_asgi())
-    })
+        })), ["*"])
 })
