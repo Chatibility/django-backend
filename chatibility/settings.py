@@ -161,5 +161,7 @@ CORS_ORIGIN_WHITELIST = (
     "http://localhost:3000",
 )
 
+CORS_ALLOW_HEADERS = ["*"]
+
 
 CSRF_TRUSTED_ORIGINS = ["https://chatibility.com", "http://localhost:3000", "localhost:3000", "127.0.0.1", "localhost"]
