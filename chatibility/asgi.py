@@ -28,7 +28,7 @@ print("asgi setupppppp")
 
 application = ProtocolTypeRouter({
     "http": get_asgi_application(),
-    "websocket": OriginValidator(AuthMiddlewareStack(URLRouter({
+    "websocket": URLRouter({
         path('chat/<uuid:chat_id>', ChatConsumer.as_asgi())
-        })), ["*"])
+        }),
 })
