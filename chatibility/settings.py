@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-hy)=g9&#ma_6p!abb5=f7f0q52vff700f$)%07sq$2-uio332+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['185.220.205.156', '127.0.0.1', 'chat.khodaveisi.com']
+ALLOWED_HOSTS = ['185.220.205.156', '127.0.0.1', 'chat.khodaveisi.com', 'api.chatibility.com']
 
 # Application definition
 
