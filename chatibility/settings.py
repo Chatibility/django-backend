@@ -27,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['185.220.205.156', '127.0.0.1', 'chat.khodaveisi.com']
 
-
 # Application definition
 
 INSTALLED_APPS = [
