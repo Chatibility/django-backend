@@ -46,11 +46,11 @@ class ChatBotViewSet(ModelViewSet):
         raw_documents = loader.load()
         raw_documents = []
 
-        notion_loader = NotionDirectoryLoader('challenge-data/')
+        # notion_loader = NotionDirectoryLoader('challenge-data/')
 
-        print("notion", notion_loader.load())
+        # print("notion", notion_loader.load())
         
-        raw_documents.extend(notion_loader.load())
+        # raw_documents.extend(notion_loader.load())
 
         text_splitter = SpacyTextSplitter(
             chunk_size=1000,
