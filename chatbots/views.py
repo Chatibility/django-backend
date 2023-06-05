@@ -87,11 +87,14 @@ class ChatBotViewSet(ModelViewSet):
 
 class ExtractURLView(APIView):
     def post(self, request, format=None):
-        with urlopen(request.data["xml_map"]) as url:
-            data = url.read()
+        try:
+            with urlopen(request.data["xml_map"]) as url:
+                data = url.read()
 
-        xml = et.fromstring(data)
-        nsmp = {"doc": "http://www.sitemaps.org/schemas/sitemap/0.9"}
-            
-        urls = [url.find('doc:loc', namespaces = nsmp).text for url in xml.findall('doc:url', namespaces = nsmp)] 
-        return Response(urls)
+            xml = et.fromstring(data)
+            nsmp = {"doc": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+                
+            urls = [url.find('doc:loc', namespaces = nsmp).text for url in xml.findall('doc:url', namespaces = nsmp)] 
+            return Response(urls)
+        except:
+            return Response([request.data["xml_map"]])
